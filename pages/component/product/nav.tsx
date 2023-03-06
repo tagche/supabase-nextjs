@@ -34,14 +34,11 @@ export default function Nav(){
                         {
                             Object.values(e.child).map((el) => (
                                 <List key={el.id} component="div" disablePadding>
-                                    <ListItemButton sx={{ pl: 4 }} prefetch={false}>
+                                    <ListItemButton sx={{ pl: 4 }}>
                                         <Link href={`/category/${el.id}`}>
                                             <a><ListItemText primary={el.subCategoryJa} /></a>
                                         </Link>
                                     </ListItemButton>
-                                    {/* <ListItemButton component={Link} href={`/category/${el.id}`} sx={{ pl: 4 }} prefetch={false}>
-                                        <ListItemText primary={el.subCategoryJa} />
-                                    </ListItemButton> */}
                                 </List>
                             ))
                         }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { productListType, productTable, categoryList } from '../../api/connect'
 import { cartContext } from '../../'
-import styles from '../../../styles/Home.module.css'
+import styles from '@/styles/Home.module.css'
 
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';

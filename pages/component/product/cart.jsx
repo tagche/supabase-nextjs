@@ -45,8 +45,10 @@ export default function Cart(){
             }
 
             {!session ? (
+                //ログイン前
                 <Auth supabaseClient={supabase} theme="dark" />
             ) : (
+                // ログイン後
                 <Account session={session} />
             )}
         </Paper>

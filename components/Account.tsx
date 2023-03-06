@@ -22,6 +22,7 @@ export default function Account({ session }: { session: Session }) {
   const [website, setWebsite] = useState<Profiles['website']>(null)
   const [avatar_url, setAvatarUrl] = useState<Profiles['avatar_url']>(null)
 
+  console.log(session);
   
   useEffect(() => {
     getProfile()
@@ -55,107 +56,55 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
-  async function updateProfile({
-    username,
-    website,
-    avatar_url,
-  }: {
-    username: Profiles['username']
-    website: Profiles['website']
-    avatar_url: Profiles['avatar_url']
-  }) {
-    try {
-      setLoading(true)
-      if (!user) throw new Error('No user')
-
-      const updates = {
-        id: user.id,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date().toISOString(),
-      }
-
-      let { error } = await supabase.from('profiles').upsert(updates)
-      if (error) throw error
-      alert('Profile updated!')
-    } catch (error) {
-      alert('Error updating the data!')
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserEmail(e.target.value)
-  }
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUserPassword(e.target.value)
-  }
-
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword((show) => !show)
   const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault()
   }
 
+  console.log(session);
+  
   return (
     <div className="form-widget">
-      <div>
-        <TextField 
-        required
-        id="email"
-        type="text"
-        defaultValue={session.user.email}
-        />
-      </div>
-      <div>
-      <FormControl sx={{ mb: '1em' }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-        <OutlinedInput
-            defaultValue={username || ''}
-            onChange={(e) => setUsername(e.target.value)}
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            endAdornment={
-            <InputAdornment position="end">
-                <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-                >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-            </InputAdornment>
-            }
-            label="Password"
-        />
-        </FormControl>
-      </div>
-{/* 
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="website"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div> */}
+      {/* {
+      <>
+        <div>
+          <TextField 
+          required
+          id="email"
+          type="text"
+          defaultValue={session.user.email}
+          sx={{ width: "100%" }}
+          />
+        </div>
+        <div>
+        <FormControl sx={{ margin: '1em 0', width: "100%" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+              defaultValue={username || ''}
+              onChange={(e) => setUsername(e.target.value)}
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+              <InputAdornment position="end">
+                  <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+              </InputAdornment>
+              }
+              label="Password"
+          />
+          </FormControl>
+        </div>
+      </>
+      } */}
 
       <div>
-        <Button
-          className="button primary block"
-          onClick={() => 
-            updateProfile({ username, website, avatar_url })
-          }
-          disabled={loading}
-          variant="outlined">
-            {loading ? 'Loading ...' : 'Update'}
-          </Button>
-          &nbsp;
       <Button
           className="button block"
           onClick={() => 
@@ -166,5 +115,6 @@ export default function Account({ session }: { session: Session }) {
           </Button>
       </div>
     </div>
-  )
+  
+   )
 }

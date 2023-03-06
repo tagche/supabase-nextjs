@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useUser, useSupabaseClient, Session } from '@supabase/auth-helpers-react'
 import { Database } from '../utils/database.types'
+
+import { TextField, Button, Typography } from '@mui/material'
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+
 type Profiles = Database['public']['Tables']['profiles']['Row']
 
 export default function Account({ session }: { session: Session }) {
@@ -76,21 +87,54 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(e.target.value)
+  }
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUserPassword(e.target.value)
+  }
+
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+  const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+  }
+
   return (
     <div className="form-widget">
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
+        <TextField 
+        required
+        id="email"
+        type="text"
+        defaultValue={session.user.email}
         />
       </div>
+      <div>
+      <FormControl sx={{ mb: '1em' }} variant="outlined">
+        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+        <OutlinedInput
+            defaultValue={username || ''}
+            onChange={(e) => setUsername(e.target.value)}
+            id="outlined-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+            <InputAdornment position="end">
+                <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+                >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+            </InputAdornment>
+            }
+            label="Password"
+        />
+        </FormControl>
+      </div>
+{/* 
       <div>
         <label htmlFor="website">Website</label>
         <input
@@ -99,22 +143,27 @@ export default function Account({ session }: { session: Session }) {
           value={website || ''}
           onChange={(e) => setWebsite(e.target.value)}
         />
-      </div>
+      </div> */}
 
       <div>
-        <button
+        <Button
           className="button primary block"
-          onClick={() => updateProfile({ username, website, avatar_url })}
+          onClick={() => 
+            updateProfile({ username, website, avatar_url })
+          }
           disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
-
-      <div>
-        <button className="button block" onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
+          variant="outlined">
+            {loading ? 'Loading ...' : 'Update'}
+          </Button>
+          &nbsp;
+      <Button
+          className="button block"
+          onClick={() => 
+            supabase.auth.signOut()
+          }
+          variant="outlined">
+            LogOut
+          </Button>
       </div>
     </div>
   )

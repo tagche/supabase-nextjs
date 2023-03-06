@@ -1,0 +1,5 @@
+.side{
+  margin-bottom: 1em;
+  display: flex;
+  gap: 20px;
+}

@@ -1,34 +1,28 @@
-//import { Auth } from '@supabase/auth-ui-react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-//import Account from '../components/Account'
-
 import { useState, createContext } from 'react'
-//import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import HeadMeta from '../components/foundation/headMeta'
-import Header from '../components/foundation/header'
-import Footer from '../components/foundation/footer'
 
-import ProductPanel from '../components/product/panel'
-import Cart from '../components/product/cart'
-import Nav from '../components/product/nav'
-import { categoryList } from './api/connect'
+import HeadMeta from '../foundation/headMeta'
+import Header from '../foundation/header'
+import Footer from '../foundation/footer'
+
+import ProductPanel from './panel'
+import Cart from './cart'
+import Nav from './nav'
+import { categoryList } from '../../pages/api/connect'
 import Typography from '@mui/material/Typography'
+
+import styles from '@/styles/Home.module.css'
 
 export const loginContext = createContext<Boolean>(false)
 export const cartContext = createContext([""])
 
 
-const Home = (props: string = "") => {
+const ProductLayout = (props: string = "") => {
   const session = useSession()
   const supabase = useSupabaseClient()
 
   const [cart, setCart] = useState([])
-  const [loginStatus, setLogin] = useState(false)
 
-  //console.log(supabase.from('products').select('id'));
-  
-  
   let categoryName = ""
   if(props.category){
     categoryList.map((e) => {
@@ -43,7 +37,6 @@ const Home = (props: string = "") => {
     : categoryName
 
   return (
-    <loginContext.Provider value={{loginStatus, setLogin}}>
     <cartContext.Provider value={{cart, setCart}}>
       <HeadMeta />
       <Header />
@@ -61,10 +54,7 @@ const Home = (props: string = "") => {
       </main>
       <Footer />
     </cartContext.Provider>
-    </loginContext.Provider>
   )
-
-
 }
 
-export default Home
+export default ProductLayout

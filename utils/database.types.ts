@@ -41,18 +41,38 @@ export interface Database {
           id: string
           ja: string | null
           price: number | null
+          updated_at: string | null
         }
         Insert: {
           category?: string | null
           id: string
           ja?: string | null
           price?: number | null
+          updated_at?: string | null
         }
         Update: {
           category?: string | null
           id?: string
           ja?: string | null
           price?: number | null
+          updated_at?: string | null
+        }
+      }
+      categories: {
+        Row: {
+          id: string
+          slug: number | null
+          ja: string | null
+        }
+        Insert: {
+          id: string
+          slug?: number | null
+          ja?: string | null
+        }
+        Update: {
+          id?: string
+          slug?: number | null
+          ja?: string | null
         }
       }
     }

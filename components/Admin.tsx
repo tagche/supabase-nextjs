@@ -2,18 +2,26 @@ import { useState, useEffect } from 'react'
 import { useUser, useSupabaseClient, Session } from '@supabase/auth-helpers-react'
 import { Database } from '../utils/database.types'
 
-import { Button } from '@mui/material'
+import { TextField, Button, Typography } from '@mui/material'
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
-type Profiles = Database['public']['Tables']['profiles']['Row']
+type Categories = Database['public']['Tables']['categories']['Row']
+type Products = Database['public']['Tables']['products']['Row']
 
-export default function Account({ session }: { session: Session }) {
+export default function Admin({ session }: { session: Session }) {
   const supabase = useSupabaseClient<Database>()
   const user = useUser()
   const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState<Profiles['username']>(null)
-  const [website, setWebsite] = useState<Profiles['website']>(null)
-  const [avatar_url, setAvatarUrl] = useState<Profiles['avatar_url']>(null)
+  const [categorySlug, setCategorySlug] = useState<Categories['slug']>(null)
+  const [categoryJa, setCategoryJa] = useState<Categories['ja']>(null)
+//  const [avatar_url, setAvatarUrl] = useState<Profiles['avatar_url']>(null)
 
   //console.log(session);
   
@@ -27,9 +35,9 @@ export default function Account({ session }: { session: Session }) {
       if (!user) throw new Error('No user')
 
       let { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url`)
-        .eq('id', user.id)
+        .from('categories')
+        .select(`slug, ja`)
+        //.eq('id', user.id)
         .single()
 
       if (error && status !== 406) {
@@ -37,9 +45,8 @@ export default function Account({ session }: { session: Session }) {
       }
 
       if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
+        setCategorySlug(data.slug)
+        setCategoryJa(data.ja)
       }
     } catch (error) {
       alert('Error loading user data!')
@@ -49,8 +56,7 @@ export default function Account({ session }: { session: Session }) {
     }
   }
 
-  const [showPassword, setShowPassword] = useState(false)
-  
+ 
   return (
     <div className="form-widget">
       <Button
@@ -61,7 +67,7 @@ export default function Account({ session }: { session: Session }) {
           variant="outlined"
           sx={{ mt: '1em'}}>
             ログアウト
-      </Button>
+          </Button>
     </div>
   
    )

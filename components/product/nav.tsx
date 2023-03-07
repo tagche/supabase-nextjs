@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { List, ListItemButton, ListItemText, Divider, Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { categoryList } from '../../api/connect'
+import { categoryList } from '../../pages/api/connect'
 
 
 //商品カテゴリをアコーディオン出力
@@ -35,7 +35,7 @@ export default function Nav(){
                             Object.values(e.child).map((el) => (
                                 <List key={el.id} component="div" disablePadding>
                                     <ListItemButton sx={{ pl: 4 }}>
-                                        <Link href={`/category/${el.id}`}>
+                                        <Link href={`/products/${el.id}`}>
                                             <a><ListItemText primary={el.subCategoryJa} /></a>
                                         </Link>
                                     </ListItemButton>

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import Home from '..'
+import Home from './'
 
 export default function CategorySelect(){
     const router = useRouter()
@@ -8,7 +8,7 @@ export default function CategorySelect(){
 
     return(
       <>
-        <Home category={routeId}/>
+        <Home />
       </>
     )
 }

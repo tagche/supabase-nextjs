@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { userList } from '@/pages/api/users'
-import { loginContext } from '../../index'
+import { loginContext } from '../../pages/index'
 import { TextField, Button, Typography } from '@mui/material'
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';

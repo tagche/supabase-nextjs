@@ -3,7 +3,7 @@ import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 
 import Paper from '@mui/material/Paper'
 
-export default function Login() {
+export default function UserLogin() {
   const supabase = useSupabaseClient()
   const session = useSession()
 

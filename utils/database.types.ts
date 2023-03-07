@@ -61,17 +61,17 @@ export interface Database {
       categories: {
         Row: {
           id: string
-          slug: number | null
+          slug: string | null
           ja: string | null
         }
         Insert: {
           id: string
-          slug?: number | null
+          slug?: string | null
           ja?: string | null
         }
         Update: {
           id?: string
-          slug?: number | null
+          slug?: string | null
           ja?: string | null
         }
       }

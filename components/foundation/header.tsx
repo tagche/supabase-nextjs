@@ -5,8 +5,12 @@ import Typography from '@mui/material/Typography'
 export default function Header(){
     return (
         <header className={styles.header}>
-            <Typography variant="h4" component="h1"><Link href="/">OrderSystem Portfolio with Supabase</Link></Typography>
-            <Typography><Link href="/">Next.js / React / TypeScript / Supabase / docker - Leo.T</Link></Typography>
+            <Link href="/products/">
+                <>
+                    <Typography variant="h4" component="h1">OrderSystem Portfolio with Supabase</Typography>
+                    <Typography>Next.js / React / TypeScript / Supabase / docker - Leo.T</Typography>
+                </>
+            </Link>
         </header>
     )
 }

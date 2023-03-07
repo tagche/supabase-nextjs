@@ -1,8 +1,8 @@
+import { Suspense } from 'react'
 import { useSession } from '@supabase/auth-helpers-react'
-import Login from '@/components/Login'
 
+import UserLogin from '@/components/Login'
 import ProductLayout from '@/components/product/layout'
-
 
 const Home = () => {
   const session = useSession()
@@ -10,9 +10,11 @@ const Home = () => {
   return (
     <div className="container" style={{ padding: '50px 50px' }}>
       {!session ? (
-        <Login />
+        <UserLogin />
       ) : (
-        <ProductLayout />
+        <Suspense fallback={<p>Loading...</p>}>
+          <ProductLayout />
+        </Suspense>
       )}
     </div>
   )

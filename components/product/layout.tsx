@@ -1,5 +1,6 @@
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect, Suspense } from 'react'
+import { getCategories, getProducts } from '../getApi'
 
 import HeadMeta from '../foundation/headMeta'
 import Header from '../foundation/header'
@@ -12,29 +13,23 @@ import { categoryList } from '../../pages/api/connect'
 import Typography from '@mui/material/Typography'
 
 import styles from '@/styles/Home.module.css'
+import React from 'react'
 
 export const loginContext = createContext<Boolean>(false)
 export const cartContext = createContext([""])
 
+const ProductLayout = () => {
+    const [cart, setCart] = useState([])
+    const [categories, setCategories] = useState([])
 
-const ProductLayout = (props: string = "") => {
-  const session = useSession()
-  const supabase = useSupabaseClient()
-
-  const [cart, setCart] = useState([])
-
-  let categoryName = ""
-  if(props.category){
-    categoryList.map((e) => {
-      e.child.map((el) => {
-        if(el.id == props.category) categoryName = el.subCategoryJa
-      })
-    })
-  }
-
-  const categoryHeader = !props.category
-    ? "すべての商品"
-    : categoryName
+    useEffect(() => {
+      const fetchData = async () => {
+        const resCategories = await getCategories()
+        setCategories(resCategories)
+        //console.log("categories : ", categories)
+      };
+      fetchData()
+    }, [])
 
   return (
     <cartContext.Provider value={{cart, setCart}}>
@@ -45,8 +40,9 @@ const ProductLayout = (props: string = "") => {
           <Nav />
         </nav>
         <div>
-          <Typography gutterBottom variant="h4" component="h2">{categoryHeader}</Typography>
-          <ProductPanel category={props.category} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <ProductPanel categories={categories} />
+          </Suspense>
         </div>
         <div className={styles.cart}>
           <Cart />
@@ -55,6 +51,8 @@ const ProductLayout = (props: string = "") => {
       <Footer />
     </cartContext.Provider>
   )
+
 }
 
 export default ProductLayout
+

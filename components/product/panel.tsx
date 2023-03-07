@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, Suspense } from 'react'
 //import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { supabase } from '../dbConnect'
 import { Database } from '../../utils/database.types'
+import { getCategories, getProducts } from '../getApi'
 
 import { cartContext } from './layout'
 import Button from '@mui/material/Button';
@@ -12,8 +12,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-type Categories = Database['public']['Tables']['categories']['Row']
-type Products = Database['public']['Tables']['products']['Row']
+import styles from '@/styles/Home.module.css'
+
+
 
 //商品毎の注文数をハンドリング
 export function CountControl(e: Database){
@@ -131,98 +132,43 @@ export function PanelParts(e: any){
 
 //商品一覧をレンダリング
 export default function ProductPanel(props: any){
-    //const supabase = useSupabaseClient<Database>()
-    //const supabase = createClient(supabaseUrl, supabaseKey)
-    const [loading, setLoading] = useState(true)
-    const [categorySlug, setCategorySlug] = useState<Categories['slug']>(null)
-    const [categoryJa, setCategoryJa] = useState<Categories['ja']>(null)
+    //const [products, setProducts] = useState<{}>({})
+    const categories = props.categories
+    let products = Array()
 
     useEffect(() => {
-        getCategories()
-        getProducts()
+        //console.log(categories)
+        categories.map((e) => {
+            const fetchData = async () => {
+                const resProducts = await getProducts(`category`, e.slug)
+                products.push([e.slug, resProducts])
+            }
+            fetchData()
+                .then(() => console.log(products))
+        })
     }, [])
 
-    async function getCategories() {
-        try {
-            setLoading(true)
-            
-            let { data, error } = await supabase
-                .from('categories')
-                .select('*')
-                console.log('categories: ' ,data)
 
-            if (error && status !== 406) {
-                throw error
-            }
-            if (data) {
-                setCategorySlug(data)
-                setCategoryJa(data)
-            }
-        } catch (error) {
-            console.log(('Error loading Category data...'))
-            console.log(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-    async function getProducts() {
-        try {
-            setLoading(true)
-            
-            let { data, error } = await supabase
-                .from('products')
-                .select('*')
-                console.log('products: ' ,data)
-
-            if (error && status !== 406) {
-                throw error
-            }
-            if (data) {
-                // setCategorySlug(data.slug)
-                // setCategoryJa(data)
-            }
-        } catch (error) {
-            console.log(('Error loading products data!'))
-            //console.log(error)
-        } finally {
-            setLoading(false)
-        }
-    }
-    
-    
     return (
         <>
-       
-        {/* <ul className={styles.productList}>
-            {
-                categoryName !== "all" &&
-                    <Grid container spacing={4} key={categoryName}>
-                        {categoryData.map((e) => (
-                            <>
-                            {e}
-                            
-                            <PanelParts {...e} />
-                            </>
-                        ))}
-                    </Grid>
-            }
-
-            {
-                categoryName == "all" &&
-                    <>
-                    {
-                        Object.values(productTable).map((arr, i: number) => (
-                            //console.log(arr[0])
-                            <Grid container key={props.category + i} spacing={4}>
-                                {categoryData.map((e) => (
-                                    <PanelParts {...e} />
-                                ))}
-                            </Grid>
-                        ))
-                    }
-                    </>
-            }
-        </ul> */}
+        {/* className={styles.productList} */}
+        {
+            console.log(products)
+        }
+        {
+        Object.values(props.categories).map((e) => (
+            <Grid container spacing={4} key={e.slug}>
+                <Typography gutterBottom variant="h4" component="h2">{e.ja}</Typography>
+                {
+                    Object.values(products).map((el, i) => (
+                        <Suspense fallback={<p>Loading...</p>}>
+                            <PanelParts {...el} />
+                        </Suspense>
+                    ))
+                }
+            </Grid>
+        ))
+        }
         </>
     )
 }

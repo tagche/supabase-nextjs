@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { supabase } from './dbConnect'
-import { Database } from '../../utils/database.types'
+import { Database } from '../utils/database.types'
 
+export type Categories = Database['public']['Tables']['categories']['Row'] | null
+export type Products = Database['public']['Tables']['products']['Row'] | null
 
-export async function getCategories() {
+export async function getCategories(select: string = '"*"', eq?: string) {
     try {
         let { data, error } = await supabase
             .from('categories')
-            .select('*')
-            console.log('categories: ' ,data)
+            .select(select)
 
         if (error && status !== 406) {
             throw error
@@ -20,14 +21,12 @@ export async function getCategories() {
         console.log(error)
     }
 }
-export async function getProducts() {
+export async function getProducts(select: string = '"*"', equal?: string) {
     try {
-        //setLoading(true)
-        
         let { data, error } = await supabase
             .from('products')
-            .select('*')
-            console.log('products: ' ,data)
+            //.select()
+            //.eq('category', 'fastfood')
 
         if (error && status !== 406) {
             throw error
@@ -36,7 +35,5 @@ export async function getProducts() {
     } catch (error) {
         console.log(('Error loading products data!'))
         console.log(error)
-    } finally {
-        //setLoading(false)
     }
 }

@@ -21,12 +21,16 @@ export async function getCategories(select: string = '"*"', eq?: string) {
         console.log(error)
     }
 }
-export async function getProducts(select: string = '"*"', equal?: string) {
+export async function getProducts(
+        select: string = '"*"', 
+        eqName?: string,
+        eqVal?: any
+    ) {
     try {
         let { data, error } = await supabase
             .from('products')
-            //.select()
-            //.eq('category', 'fastfood')
+            .select(select)  
+            .eq(eqName, eqVal) 
 
         if (error && status !== 406) {
             throw error

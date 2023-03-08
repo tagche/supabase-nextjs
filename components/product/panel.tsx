@@ -13,6 +13,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import styles from '@/styles/Home.module.css'
+import { Box, Container } from '@mui/system'
 
 
 
@@ -95,80 +96,72 @@ export function CountControl(e: Database){
     )
 }
 
-export function PanelParts(e: any){
-    console.log("--------- ", e)
+export function PanelParts(props: any){
+    const products = props
+    console.log("--- ", products)
     return (
-        <Grid item key={e.id} sm={12} md={6} lg={4} sx={{marginBottom: "2em"}}>
-            <Card
-            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-            >
-            <CardMedia
-                component="img"
-                sx={{ 16:9 }}
-                image="https://unsplash.it/800/600/?random"
-                alt="random"
-            />
-            <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h6" component="h2" sx={{fontWeight: 'bold'}}>
-                {e.ja}
-                </Typography>
-                <Typography>
-                テキストテキストテキストテキストテキストテキストテキストテキストテキスト
-                </Typography>
-                <Typography sx={{pt: '.5em', fontSize: '1em'}}>
-                    {e.price} 円
-                </Typography>
-            </CardContent>
-            <CardActions
-                sx={{
-                    pb: "1em"
-                }}>
-                <CountControl {...e} />
-            </CardActions>
-            </Card>
-        </Grid>
+        Object.values(products).map((e) => (
+            <Grid item key={e.id} sm={12} md={6} lg={4} sx={{marginBottom: "2em"}}>
+                <Card
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                <CardMedia
+                    component="img"
+                    sx={{ 16:9 }}
+                    image="https://unsplash.it/800/600/?random"
+                    alt="random"
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h6" component="h2" sx={{fontWeight: 'bold'}}>
+                    {e.ja}
+                    </Typography>
+                    <Typography>
+                    テキストテキストテキストテキストテキストテキストテキストテキストテキスト
+                    </Typography>
+                    <Typography sx={{pt: '.5em', fontSize: '1em'}}>
+                        {e.price} 円
+                    </Typography>
+                </CardContent>
+                <CardActions
+                    sx={{
+                        pb: "1em"
+                    }}>
+                    <CountControl {...e} />
+                </CardActions>
+                </Card>
+            </Grid>
+        ))
     )
 }
 
 //商品一覧をレンダリング
 export default function ProductPanel(props: any){
-    //const [products, setProducts] = useState<{}>({})
     const categories = props.categories
-    let products = Array()
+    const [products, setProducts] = useState([])
 
     useEffect(() => {
-        //console.log(categories)
-        categories.map((e) => {
-            const fetchData = async () => {
-                const resProducts = await getProducts(`category`, e.slug)
-                products.push([e.slug, resProducts])
-            }
-            fetchData()
-                .then(() => console.log(products))
-        })
+        const fetchData = async () => {
+            const slug = await "fastfood"
+            const resProducts = await getProducts(undefined, "category", slug)
+            await setProducts(resProducts)
+        }
+        fetchData() 
     }, [])
-
 
     return (
         <>
-        {/* className={styles.productList} */}
+        <div className={styles.productList}>
         {
-            console.log(products)
-        }
-        {
-        Object.values(props.categories).map((e) => (
-            <Grid container spacing={4} key={e.slug}>
-                <Typography gutterBottom variant="h4" component="h2">{e.ja}</Typography>
-                {
-                    Object.values(products).map((el, i) => (
-                        <Suspense fallback={<p>Loading...</p>}>
-                            <PanelParts {...el} />
-                        </Suspense>
-                    ))
-                }
+        Object.values(categories).map((e, i) => (
+            <>
+            <Typography sx={{margin:"0 0 .5em"}} variant="h4" component="h2">{e.ja}</Typography>
+            <Grid container spacing={2} key={i}>
+                <PanelParts {...products} />
             </Grid>
+            </>
         ))
         }
+        </div>
         </>
     )
 }

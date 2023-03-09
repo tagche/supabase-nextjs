@@ -20,17 +20,16 @@ export const cartContext = createContext([""])
 
 const ProductLayout = () => {
     const [cart, setCart] = useState([])
-    const [categories, setCategories] = useState([])
+    const [products, setProducts] = useState([])
 
     useEffect(() => {
       const fetchData = async () => {
-        const resCategories = await getCategories()
-        setCategories(resCategories)
-        //console.log("categories : ", categories)
-      };
-      fetchData()
+        const resProducts = await getCategories()
+        setProducts(resProducts)
+      }
+      fetchData().then((e) => console.log(e))
     }, [])
-
+  
   return (
     <cartContext.Provider value={{cart, setCart}}>
       <HeadMeta />
@@ -41,7 +40,7 @@ const ProductLayout = () => {
         </nav>
         <div>
           <Suspense fallback={<p>Loading...</p>}>
-            <ProductPanel categories={categories} />
+            <ProductPanel products={products} />
           </Suspense>
         </div>
         <div className={styles.cart}>

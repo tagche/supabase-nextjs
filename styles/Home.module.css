@@ -20,14 +20,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 2em 0;
+  margin: 0;
   text-align: left;
 }
-.productList li{
-  min-width: 10em;
-  padding: 1em;
-  border: 1px solid lightgray;
-  text-align: center;
+.productListSec{
+  margin-bottom: 3em;
 }
 
 .productList button{

@@ -56,7 +56,7 @@ const Home = (props: string = "") => {
           <ProductPanel category={props.category} />
         </div>
         <div className={styles.cart}>
-          <Cart />
+          {/* <Cart /> */}
         </div>
       </main>
       <Footer />

@@ -40,6 +40,7 @@ export interface Database {
           category: string | null
           id: string
           ja: string | null
+          description: string | null
           price: number | null
           updated_at: string | null
         }
@@ -47,6 +48,7 @@ export interface Database {
           category?: string | null
           id: string
           ja?: string | null
+          description?: string | null
           price?: number | null
           updated_at?: string | null
         }
@@ -54,6 +56,7 @@ export interface Database {
           category?: string | null
           id?: string
           ja?: string | null
+          description?: string | null
           price?: number | null
           updated_at?: string | null
         }

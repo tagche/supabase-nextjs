@@ -78,6 +78,23 @@ export interface Database {
           ja?: string | null
         }
       }
+      category_parent: {
+        Row: {
+          id: string
+          parent_slug: string | null
+          parent_ja: string | null
+        }
+        Insert: {
+          id: string
+          parent_slug?: string | null
+          parent_ja?: string | null
+        }
+        Update: {
+          id?: string
+          parent_slug?: string | null
+          parent_ja?: string | null
+        }
+      }
     }
     Views: {
       [_ in never]: never

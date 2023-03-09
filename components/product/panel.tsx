@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext, Suspense, useMemo } from 'react'
-//import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Database } from '../../utils/database.types'
 import { getCategories, getProducts } from '../getApi'
 
@@ -13,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import styles from '@/styles/Home.module.css'
-//import { Box, Container } from '@mui/system'
+import { getImagePath } from '../module/functions'
 
 //商品毎の注文数をハンドリング
 export function CountControl(e: Database){
@@ -43,6 +42,7 @@ export function CountControl(e: Database){
                     id: id,
                     ja: e.ja,
                     price: e.price,
+                    image: getImagePath(e.image),
                     count: count + 1
                 }])
             }
@@ -96,8 +96,12 @@ export function CountControl(e: Database){
 
 export function PanelParts(product: any){
     const e = product
-    const siteUrl = document.location.origin
-    
+    const [imgPath, setImgPath] = useState("")
+
+    useEffect(() => {
+        const imgPath = getImagePath(e.image)
+        setImgPath(imgPath)
+    }, [])
     return (
             <Grid item key={e.id} sm={12} md={6} lg={4} sx={{marginBottom: "2em"}}>
                 <Card
@@ -106,7 +110,7 @@ export function PanelParts(product: any){
                 <CardMedia
                     component="img"
                     sx={{ 16:9 }}
-                    image={siteUrl+'/assets/images/'+e.image}
+                    image={imgPath}
                     alt="random"
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
@@ -135,14 +139,12 @@ export function PanelParts(product: any){
 export default function ProductPanel(props: any){
     const products = props.products
     
-    console.log(products)
-    
     return (
         <div className={styles.productList}>
             {
             Object.values(products).map((category) => (
                 <section key={category.slug} className={styles.productListSec}>
-                    <Typography sx={{margin:"0 0 .5em"}} variant="h4" component="h2">{category.ja}</Typography>
+                    <Typography sx={{margin:"0 0 1em"}} variant="h4" component="h2">{category.ja}</Typography>
                     <Grid container spacing={2}>
                         {
                         Object.values(category.products).map((product) => (

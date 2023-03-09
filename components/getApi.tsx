@@ -4,45 +4,44 @@ import { Database } from '../utils/database.types'
 
 export type Categories = Database['public']['Tables']['categories']['Row'] | null
 export type Products = Database['public']['Tables']['products']['Row'] | null
+export type Category_parent = Database['public']['Tables']['category_parent']['Row'] | null
 
-export async function getCategories(
-    // select: string = '"*"', 
-    // eq?: string
-){
+export async function getNav(){
     try {
         let { data, error } = await supabase
-            .from('categories')
-            .select('slug, ja, products (*)')
+            .from('category_parent')
+            .select('parent_slug, parent_ja, categories (*)')
 
-            console.log(data)
-            
         if (error && status !== 406) {
             throw error
         }
-        if(data) return data
+        return data
         
     } catch (error) {
         console.log(('Error loading Category data...'))
         console.log(error)
     }
 }
-// export async function getProducts(
-//         select: string = '"*"', 
-//         eqName?: string,
-//         eqVal?: any
-//     ) {
-//     try {
-//         let { data, error } = await supabase
-//             .from('products')
-//             .select(select)  
-//             .eq(eqName, eqVal) 
 
-//         if (error && status !== 406) {
-//             throw error
-//         }
-//         if (data) return data
-//     } catch (error) {
-//         console.log(('Error loading products data!'))
-//         console.log(error)
-//     }
-// }
+
+export async function getCategories(route?: string){
+    try {
+        const target = route ? 'slug' : ''
+        route  = route ? route : ''
+
+        let { data, error } = await supabase
+        .from('categories')
+        .select('slug, ja, products (*)')
+        .eq(target, route)
+
+        if (error && status !== 406) {
+            throw error
+        }
+        return data
+        
+    } catch (error) {
+        console.log(('Error loading Category data...'))
+        console.log(error)
+    }
+}
+

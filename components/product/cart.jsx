@@ -2,13 +2,12 @@ import { Auth } from '@supabase/auth-ui-react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import Account from '../Account'
 
-import { useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Divider } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button';
 import { cartContext } from './layout'
-//import LoginControl from "../module/loginControl"
-
+import { getImagePath } from '../module/functions'
 import styles from '@/styles/cart.module.css'
 
 export default function Cart(){
@@ -16,7 +15,8 @@ export default function Cart(){
     const supabase = useSupabaseClient()
     
     const { cart, setCart } = useContext(cartContext)
-    console.log(cart);
+    const [ imagePath, setImagePath ] = useState("")
+    
     return (
         <>
         <Paper elevation={1} sx={{padding: '1em'}}>
@@ -27,7 +27,7 @@ export default function Cart(){
                     {
                         Object.values(cart).map(e => 
                             <li key={e.id} className={styles.side}>
-                                <img src="https://unsplash.it/800/600/?random" alt="" width="100" />
+                                <img src={e.image} alt="" width="100" />
                                 <p>{e.ja}<br />{e.count}点</p>
                             </li>
                         )

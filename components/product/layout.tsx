@@ -16,12 +16,12 @@ export const cartContext = createContext([])
 
 
 const ProductLayout = () => {
-    const router = useRouter()
-    const routeId = router.query.id
-    
     const [cart, setCart] = useState([])
     const [products, setProducts] = useState([])
-
+    
+    const router = useRouter()    
+    const routeId = router.query.id
+    
     useEffect(() => {
       const fetchData = async () => {
         const resProducts = await getCategories(routeId)

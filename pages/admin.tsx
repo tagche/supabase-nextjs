@@ -7,6 +7,7 @@ import HeadMeta from '@/components/foundation/headMeta'
 import { useEffect, useState } from 'react'
 import ProductsTable from '@/components/admin/table'
 import { Paper } from '@mui/material'
+import Footer from '@/components/foundation/footer'
 
 
 
@@ -18,13 +19,14 @@ const Admin = () => {
     <>
       <HeadMeta />
       <Header />
+      <main className={styles.adminMain}>
       {!session ? (
         <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" />
       ) : (
-        <main className={styles.adminMain}>
-          <ProductsTable />
-        </main>
+        <ProductsTable />
       )}
+      </main>
+      <Footer />
     </>
   )
 }

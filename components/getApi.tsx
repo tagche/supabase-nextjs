@@ -7,6 +7,21 @@ export type Categories = Database['public']['Tables']['categories']['Row'] | nul
 export type Products = Database['public']['Tables']['products']['Row'] | null
 export type Category_parent = Database['public']['Tables']['category_parent']['Row'] | null
 
+export async function deleteProductApi(id){
+    try {
+        let { data, error } = await supabase
+            .from('products')
+            .delete()
+            .match({ 'id': id })
+
+        if (error) return error.message
+        return false
+
+    } catch (error) {
+        return error.message
+    }
+}
+
 export async function addProductApi(setData){
     try {
         let { data, error } = await supabase
@@ -19,9 +34,7 @@ export async function addProductApi(setData){
     } catch (error) {
         return error.message
     }
-
 }
-
 
 export async function getAdminControlPanel(){
     try {

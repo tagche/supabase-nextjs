@@ -7,7 +7,6 @@ import { useState } from "react"
 export default function AddProduct(slugs) {
 
     const [ selectCategory, setSelectCategory ] = useState("")
-    //const [ errResult, setErrResult ] = useState("")
     const [ message, setMessage ] = useState("")
     const [ messageMode, setMessageMode ] = useState("")
     
@@ -39,7 +38,7 @@ export default function AddProduct(slugs) {
             const resultAPI = addProductApi(setData)
             resultAPI.then((msg) => {
                 if(msg) setMessage(msg), setMessageMode("error")
-                else setMessage("登録しました"), setMessageMode("success")
+                else setMessage("登録しました"), setMessageMode("success"), window.location.reload()
             })
         }
     })

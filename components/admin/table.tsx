@@ -1,7 +1,9 @@
 import { getAdminControlPanel, getCategorySlug, Products as ProductsTypes } from '../getApi'
 
 import * as React from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Paper, TextField, Typography } from '@mui/material'
+import AddProduct from './addProduct'
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 50 },
@@ -12,6 +14,7 @@ const columns: GridColDef[] = [
 ];
 
 let rows: ProductsTypes = []
+let slugs = {}
 
 const fetchSlugData = new Promise((resolve, reject) => {
     const resSlug = getCategorySlug()
@@ -23,7 +26,9 @@ const fetchProductsData = new Promise((resolve, reject) => {
 })
 
 fetchSlugData
-    .then((slugs) => {
+    .then((slug) => {
+        slugs = slug
+        
         //テーブル一覧用データ
         //categoryがslugで返ってくるので、日本語に変換して格納
         fetchProductsData.then((prds) => {
@@ -43,18 +48,23 @@ fetchSlugData
     }
 )
 
-
-
 export default function DataTable() {
-  return (
-    <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection={false}
-      />
-    </div>
-  );
+    return (
+        <>
+        <Typography　variant="h6" component="h4" sx={{ mb: '1em' }}>商品一覧</Typography>
+        <Paper sx={{ bgcolor: 'background.paper' }}>
+        <div style={{ height: 400, width: '100%' }}>
+        <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            checkboxSelection={false}
+        />
+        </div>
+        </Paper>
+        <br />
+        <AddProduct {...slugs} />
+        </>
+    );
 }

@@ -13,13 +13,6 @@ import { Paper } from '@mui/material'
 const Admin = () => {
   const session = useSession()
   const supabase = useSupabaseClient()
-
-  const [ products, setProducts ] = useState([])
-  
-  useEffect(() => {
-
-  }, [])
-
   
   return (
     <>
@@ -29,9 +22,7 @@ const Admin = () => {
         <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" />
       ) : (
         <main className={styles.adminMain}>
-          <Paper sx={{ bgcolor: 'background.paper' }}>
-            <ProductsTable />
-          </Paper>
+          <ProductsTable />
         </main>
       )}
     </>

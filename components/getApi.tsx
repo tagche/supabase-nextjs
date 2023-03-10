@@ -1,10 +1,27 @@
 import { useState } from 'react'
 import { supabase } from './dbConnect'
 import { Database } from '../utils/database.types'
+import { rejects } from 'assert'
 
 export type Categories = Database['public']['Tables']['categories']['Row'] | null
 export type Products = Database['public']['Tables']['products']['Row'] | null
 export type Category_parent = Database['public']['Tables']['category_parent']['Row'] | null
+
+export async function addProductApi(setData){
+    try {
+        let { data, error } = await supabase
+            .from('products')
+            .insert([setData])
+
+        if (error) return error.message
+        return false
+
+    } catch (error) {
+        return error.message
+    }
+
+}
+
 
 export async function getAdminControlPanel(){
     try {
@@ -22,7 +39,6 @@ export async function getAdminControlPanel(){
         console.log(error)
     }
 }
-
 
 export async function getCategorySlug(){
     try {
@@ -47,9 +63,6 @@ export async function getCategorySlug(){
         console.log(error)
     }
 }
-
-
-
 
 export async function getNav(){
     try {

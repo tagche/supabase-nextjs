@@ -38,7 +38,7 @@ export default function Cart(){
             }
             {
                 session
-                ? cart.length > 0 ? <Button variant="contained">購入手続きへ進む</Button>: <><p>カートは空です</p></>
+                ? cart.length > 0 ? <Button variant="contained">購入手続きへ（仮）</Button>: <><p>カートは空です</p></>
                 : <><p>ログインしてください</p></>
             }
 

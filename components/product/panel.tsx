@@ -18,7 +18,7 @@ import { getImagePath } from '../module/functions'
 export function CountControl(e: Database){
     const { cart, setCart } = useContext(cartContext)
     
-    const [ count, setCount ] = useState(0)
+    const [ count, setCount ] = useState<number>(0)
     const [ disable1, setDisable1 ] = useState(false)
     const [ disable2, setDisable2 ] = useState(true)
 

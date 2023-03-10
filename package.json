@@ -11,6 +11,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
+    "@mui/lab": "^5.0.0-alpha.122",
     "@mui/material": "^5.11.11",
     "@mui/x-data-grid": "^6.0.1",
     "@supabase/auth-helpers-nextjs": "^0.5.4",

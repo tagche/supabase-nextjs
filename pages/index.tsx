@@ -43,7 +43,7 @@ const Home = (props: string = "") => {
     : categoryName
 
   return (
-    <loginContext.Provider value={{loginStatus, setLogin}}>
+    // <loginContext.Provider value={{loginStatus, setLogin}}>
     <cartContext.Provider value={{cart, setCart}}>
       <HeadMeta />
       <Header />
@@ -61,7 +61,7 @@ const Home = (props: string = "") => {
       </main>
       <Footer />
     </cartContext.Provider>
-    </loginContext.Provider>
+    // </loginContext.Provider>
   )
 
 

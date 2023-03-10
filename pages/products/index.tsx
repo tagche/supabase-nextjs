@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { useSession } from '@supabase/auth-helpers-react'
 
-import UserLogin from '@/components/Login'
+import UserLogin from '@/components/module/Login'
 import ProductLayout from '@/components/product/layout'
 
 const Home = () => {

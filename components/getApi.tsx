@@ -6,6 +6,51 @@ export type Categories = Database['public']['Tables']['categories']['Row'] | nul
 export type Products = Database['public']['Tables']['products']['Row'] | null
 export type Category_parent = Database['public']['Tables']['category_parent']['Row'] | null
 
+export async function getAdminControlPanel(){
+    try {
+        let { data, error } = await supabase
+            .from('products')
+            .select('*')
+
+        if (error && status !== 406) {
+            throw error
+        }
+        return data
+        
+    } catch (error) {
+        console.log(('Error loading Category data...'))
+        console.log(error)
+    }
+}
+
+
+export async function getCategorySlug(){
+    try {
+        let { data, error } = await supabase
+        .from('categories')
+        .select('slug, ja')
+
+        if (error && status !== 406) {
+            throw error
+        }
+
+        //slugに相対する日本語カテゴリ名を成形して格納
+        let simpleSlugs = {}
+        Object.values(data).map((e) => {
+            Object.assign(simpleSlugs, {[e.slug]: e.ja})
+        })
+
+        return simpleSlugs
+        
+    } catch (error) {
+        console.log(('Error loading Category data...'))
+        console.log(error)
+    }
+}
+
+
+
+
 export async function getNav(){
     try {
         let { data, error } = await supabase
@@ -22,7 +67,6 @@ export async function getNav(){
         console.log(error)
     }
 }
-
 
 export async function getCategories(route?: string){
     try {

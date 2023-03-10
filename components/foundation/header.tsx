@@ -3,6 +3,13 @@ import styles from '@/styles/Header.module.css'
 import { Typography, Button } from '@mui/material'
 
 export default function Header(){
+    let adminPage = false
+    if (process.browser){
+        const locPath = document.location.pathname
+        if(locPath.indexOf('admin') == -1) adminPage = true
+    }
+    
+
     return (
         <header className={styles.header}>
             <div>
@@ -14,9 +21,18 @@ export default function Header(){
             </Link>
             </div>
             <div>
-            <Link href="/admin">
-                <Button variant="contained"><Typography>商品管理画面へ</Typography></Button>
-            </Link>
+            {
+                adminPage
+                ?
+                <a href="/admin">
+                    <Button variant="contained"><Typography>商品管理画面へ</Typography></Button>
+                </a>
+                :
+                <a href="/products">
+                    <Button variant="outlined"><Typography>商品ページへ</Typography></Button>
+                </a>
+            }
+            
             </div>
         </header>
     )

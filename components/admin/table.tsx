@@ -1,4 +1,4 @@
-import { deleteProductApi, getAdminControlPanel, getCategorySlug, Products as ProductsTypes } from '../getApi'
+import { deleteProductApi, getAdminControlPanel, getCategorySlug, Products as ProductsTypes, slugsType } from '../getApi'
 
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -11,8 +11,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-let rows: ProductsTypes = []
-let slugs = {}
+let rows: ProductsTypes[] = []
+let slugs: slugsType[] = []
 
 const fetchSlugData = new Promise((resolve, reject) => {
     const resSlug = getCategorySlug()
@@ -24,16 +24,19 @@ const fetchProductsData = new Promise((resolve, reject) => {
 })
 
 fetchSlugData
-    .then((slug) => {
+    .then((slug: any) => {
         slugs = slug
         
         //テーブル一覧用データ
         //categoryがslugで返ってくるので、日本語に変換して格納
         fetchProductsData.then((prds) => {
+            if(!prds) return false
             Object.values(prds).map((e) => {
+                const str = slugs[e.category]
+                
                 rows.push(
                     {
-                        category: slugs[e.category],
+                        category: str,
                         id: e.id,
                         ja: e.ja,
                         description: e.description,

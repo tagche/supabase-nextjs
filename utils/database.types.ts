@@ -40,27 +40,27 @@ export interface Database {
           category: string | null
           id: string
           ja: string
-          slug: string
-          description: string | null
+          slug?: string
+          description?: string | null
           price: number | null
-          updated_at: string | null
+          updated_at?: string | null
         }
         Insert: {
           category?: string | null
-          id: string
+          id?: string
           ja: string
-          slug: string
+          slug?: string
           description?: string | null
-          price?: number | null
+          price: number | null
           updated_at?: string | null
         }
         Update: {
           category?: string | null
           id?: string
           ja: string
-          slug: string
+          slug?: string
           description?: string | null
-          price?: number | null
+          price: number | null
           updated_at?: string | null
         }
       }

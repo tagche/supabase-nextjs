@@ -1,25 +1,28 @@
-import { Alert, Box, Button, MenuItem, Paper, TextField, Typography } from "@mui/material"
+import { Alert, AlertColor, Box, Button, MenuItem, Paper, TextField, Typography } from "@mui/material"
 import { addProductApi } from "../getApi"
 import LoadingButton from '@mui/lab/LoadingButton'
 import SendIcon from '@mui/icons-material/Send'
-import { useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 
-export default function AddProduct(slugs) {
 
+export default function AddProduct(slugs: []) {
+
+    
     const [ selectCategory, setSelectCategory ] = useState("")
     const [ message, setMessage ] = useState("")
-    const [ messageMode, setMessageMode ] = useState("")
+    const [ messageMode, setMessageMode ] = useState<AlertColor>()
     
-    const handleChange = ((e) => {
+    const handleChange = ((e: any) => {
         setSelectCategory(e.target.value)
     })
 
     //送信時の入力内容チェック
-    const handleSubmit = ((e) => {
+    const handleSubmit = ((e: any) => {
         e.preventDefault()
-        
+        console.log(e);
+
         setMessage("")
-        setMessageMode("")
+        setMessageMode(undefined)
 
         const setData = {
             category: selectCategory,

@@ -148,7 +148,7 @@ export default function ProductPanel(props: any){
                     <Grid container spacing={2}>
                         {
                         Object.values(category.products).map((product) => (
-                            <PanelParts {...product} />
+                            <PanelParts {...product} key={product.id} />
                         ))
                         }
                     </Grid>

@@ -24,13 +24,10 @@ export default function Header(){
             {
                 adminPage
                 ?
-                <a href="/admin">
-                    <Button variant="contained"><Typography>商品管理画面へ</Typography></Button>
-                </a>
+                    <Button variant="contained" href='/admin'><Typography>商品管理画面へ</Typography></Button>
                 :
-                <a href="/products">
-                    <Button variant="outlined"><Typography>商品ページへ</Typography></Button>
-                </a>
+                    <Button variant="outlined" href='/products'><Typography>商品ページへ</Typography></Button>
+                
             }
             
             </div>

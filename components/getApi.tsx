@@ -53,6 +53,11 @@ export async function getAdminControlPanel(){
     }
 }
 
+export type slugsType = {
+    slug: string
+    ja: string
+}
+
 export async function getCategorySlug(){
     try {
         let { data, error } = await supabase

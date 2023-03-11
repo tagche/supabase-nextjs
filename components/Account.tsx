@@ -52,7 +52,7 @@ export default function Account({ session }: { session: Session }) {
   const [showPassword, setShowPassword] = useState(false)
   
   return (
-    <div className="form-widget">
+    <div className="form-widget loginBlock">
       <Button
           className="button block"
           onClick={() => 

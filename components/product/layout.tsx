@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect, Suspense } from 'react'
+import { useState, useContext, useEffect, Suspense } from 'react'
 import { useRouter } from 'next/router'
 import { getCategories } from '../getApi'
 
@@ -11,12 +11,10 @@ import Cart from './cart'
 import Nav from './nav'
 import styles from '@/styles/Home.module.css'
 
-export const loginContext = createContext<Boolean>(false)
-export const cartContext = createContext([])
-
+import { cartContext } from '../../pages/_app'
 
 const ProductLayout = () => {
-    const [cart, setCart] = useState([])
+    const { cart, setCart } = useContext(cartContext)
     const [products, setProducts] = useState([])
     
     const router = useRouter()    
@@ -24,14 +22,14 @@ const ProductLayout = () => {
     
     useEffect(() => {
       const fetchData = async () => {
-        const resProducts = await getCategories(routeId)
+        const resProducts = routeId ? await getCategories(routeId): await getCategories()
         setProducts(resProducts)
       }
       fetchData()
     }, [routeId])
   
   return (
-    <cartContext.Provider value={{cart, setCart}}>
+    <>
       <HeadMeta />
       <Header />
       <main className={styles.main}>
@@ -48,7 +46,7 @@ const ProductLayout = () => {
         </div>
       </main>
       <Footer />
-    </cartContext.Provider>
+    </>
   )
 
 }

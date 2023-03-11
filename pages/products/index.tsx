@@ -1,23 +1,13 @@
-import { Suspense } from 'react'
-import { useSession } from '@supabase/auth-helpers-react'
+import ProductLayout from "@/components/product/layout"
+import { Suspense } from "react"
 
-import UserLogin from '@/components/module/Login'
-import ProductLayout from '@/components/product/layout'
-
-const Home = () => {
-  const session = useSession()
-
-  return (
-    <div className="container" style={{ padding: '50px 50px' }}>
-      {!session ? (
-        <UserLogin />
-      ) : (
+export default function CategorySelect(){
+    return(
+      <>
         <Suspense fallback={<p>Loading...</p>}>
           <ProductLayout />
         </Suspense>
-      )}
-    </div>
-  )
+      </>
+    )
 }
 
-export default Home

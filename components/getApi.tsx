@@ -100,23 +100,31 @@ export async function getNav(){
 }
 
 export async function getCategories(route?: string){
-    try {
-        const target = route ? 'slug' : ''
-        route  = route ? route : ''
-
-        let { data, error } = await supabase
-        .from('categories')
-        .select('slug, ja, products (*)')
-        .eq(target, route)
-
-        if (error && status !== 406) {
-            throw error
-        }
-        return data
+    let target = '', slug = ''
+    const result = getCategorySlug()
+        .then((e) => {
+            if(route && e[route]) target = 'slug', slug = route
+        })
+        .then(async() => {
+            try {
+                let { data, error } = await supabase
+                .from('categories')
+                .select('slug, ja, products (*)')
+                .eq(target, slug)
         
-    } catch (error) {
-        console.log(('Error loading Category data...'))
-        console.log(error)
-    }
+                if (error && status !== 406) {
+                    throw error
+                }
+
+                return data
+        
+            } catch (error) {
+                console.log(('Error loading Category data...'))
+                console.log(error)
+            }
+        })
+
+        return result
+
 }
 

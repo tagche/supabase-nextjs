@@ -1,8 +1,11 @@
 import '@/styles/globals.scss'
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react'
 import { AppProps } from 'next/app'
+
+export const loginContext = createContext<Boolean>(false)
+export const cartContext = createContext([])
 
 function MyApp({
   Component,
@@ -11,10 +14,13 @@ function MyApp({
   initialSession: Session,
 }>) {
   const [supabase] = useState(() => createBrowserSupabaseClient())
+  const [cart, setCart] = useState([])
 
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-      <Component {...pageProps} />
+      <cartContext.Provider value={{cart, setCart}}>
+        <Component {...pageProps} />
+      </cartContext.Provider>
     </SessionContextProvider>
   )
 }

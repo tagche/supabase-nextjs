@@ -6,7 +6,7 @@ import { useState, useEffect, useContext } from 'react'
 import { Divider } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button';
-import { cartContext } from './layout'
+import { cartContext } from '../../pages/_app'
 import { getImagePath } from '../module/functions'
 import styles from '@/styles/cart.module.css'
 

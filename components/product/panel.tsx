@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext, Suspense, useMemo } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Database } from '../../utils/database.types'
-import { getCategories, getProducts } from '../getApi'
+//import { getCategories } from '../getApi'
 
-import { cartContext } from './layout'
+import { cartContext } from '../../pages/_app'
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';

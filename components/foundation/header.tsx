@@ -1,15 +1,19 @@
 import Link from 'next/link'
 import styles from '@/styles/Header.module.css'
 import { Typography, Button } from '@mui/material'
+import { NoSsr } from '@mui/base'
+import { useEffect, useState } from 'react'
 
 export default function Header(){
-    let adminPage = false
-    if (process.browser){
-        const locPath = document.location.pathname
-        if(locPath.indexOf('admin') == -1) adminPage = true
-    }
-    
+    const [ adminPage, setAdminPage ] = useState(false)
 
+    useEffect(() => {
+        if (process.browser){
+            const locPath = document.location.pathname
+            if(locPath.indexOf('admin') == -1) setAdminPage(true)
+        }
+    }, [])
+    
     return (
         <header className={styles.header}>
             <div>
@@ -20,17 +24,16 @@ export default function Header(){
                 </>
             </Link>
             </div>
-            <div>
+            <NoSsr>
             {
                 adminPage
                 ?
                     <Button variant="contained" href='/admin'><Typography>商品管理画面へ</Typography></Button>
                 :
                     <Button variant="outlined" href='/products'><Typography>商品ページへ</Typography></Button>
-                
             }
             
-            </div>
+            </NoSsr>
         </header>
     )
 }

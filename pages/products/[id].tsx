@@ -1,9 +1,12 @@
-import Home from './'
+import ProductLayout from "@/components/product/layout"
+import { Suspense } from "react"
 
 export default function CategorySelect(){
     return(
       <>
-        <Home />
+        <Suspense fallback={<p>Loading...</p>}>
+          <ProductLayout />
+        </Suspense>
       </>
     )
 }

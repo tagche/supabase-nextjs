@@ -11,10 +11,7 @@ import Cart from './cart'
 import Nav from './nav'
 import styles from '@/styles/Home.module.css'
 
-import { cartContext } from '../../pages/_app'
-
 const ProductLayout = () => {
-    const { cart, setCart } = useContext(cartContext)
     const [products, setProducts] = useState([])
     
     const router = useRouter()    

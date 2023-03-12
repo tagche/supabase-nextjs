@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, memo, useMemo } from 'react'
 import { Database } from '../../utils/database.types'
-//import { getCategories } from '../getApi'
-
+import { Products as ProductsType } from '../getApi'
 import { cartContext } from '../../pages/_app'
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -15,13 +14,19 @@ import styles from '@/styles/Home.module.css'
 import { getImagePath } from '../module/functions'
 
 //商品毎の注文数をハンドリング
-export function CountControl(e: Database){
+export const CountControl = (e: ProductsType) => {
     const { cart, setCart } = useContext(cartContext)
     
-    const [ count, setCount ] = useState<number>(0)
+    const [ count, setCount ] = useState(0)
     const [ disable1, setDisable1 ] = useState(false)
     const [ disable2, setDisable2 ] = useState(true)
 
+    useEffect(() => {
+        cart.map((el, i) => {
+            if(e.id == el.id) setCount(el.count), handleCount(true)
+        })
+    }, [])
+    
     const handleCount = (flag: boolean) => {
         const id = e.id
         if(flag && count < 3){
@@ -94,7 +99,7 @@ export function CountControl(e: Database){
     )
 }
 
-export function PanelParts(product: any){
+export const PanelParts = (product: any) => {
     const e = product
     const [imgPath, setImgPath] = useState("")
 
@@ -158,3 +163,5 @@ export default function ProductPanel(props: any){
         </div>
     )
 }
+
+//export default memo(ProductPanel)

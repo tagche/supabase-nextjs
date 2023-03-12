@@ -17,11 +17,12 @@ let slugs: slugsType[] = []
 const fetchSlugData = new Promise((resolve, reject) => {
     const resSlug = getCategorySlug()
     resolve(resSlug)
-})
+}).catch(error => console.error(error.message))
+
 const fetchProductsData = new Promise((resolve, reject) => {
     const resProducts = getAdminControlPanel()
     resolve(resProducts)
-})
+}).catch(error => console.error(error.message))
 
 fetchSlugData
     .then((slug: any) => {
@@ -30,20 +31,17 @@ fetchSlugData
         //テーブル一覧用データ
         //categoryがslugで返ってくるので、日本語に変換して格納
         fetchProductsData.then((prds) => {
-            if(!prds) return false
-            Object.values(prds).map((e) => {
+            if(!prds || prds == 0) return false
+            Object.values(prds).map((e, i) => {
                 const str = slugs[e.category]
-                
-                rows.push(
-                    {
-                        category: str,
-                        id: e.id,
-                        ja: e.ja,
-                        description: e.description,
-                        price: e.price,
-                        updated_at: e.updated_at
-                    }
-                )
+                rows.push({
+                    category: str,
+                    id: e.id,
+                    ja: e.ja,
+                    description: e.description,
+                    price: e.price,
+                    updated_at: e.updated_at
+                })
             })
         })
     }

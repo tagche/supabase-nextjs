@@ -7,7 +7,6 @@ import { ChangeEvent, FormEvent, useState } from "react"
 
 export default function AddProduct(slugs: {}) {
 
-    
     const [ selectCategory, setSelectCategory ] = useState("")
     const [ message, setMessage ] = useState("")
     const [ messageMode, setMessageMode ] = useState<AlertColor>()
@@ -19,7 +18,7 @@ export default function AddProduct(slugs: {}) {
     //送信時の入力内容チェック
     const handleSubmit = ((e: any) => {
         e.preventDefault()
-        console.log(e);
+        //console.log(e);
 
         setMessage("")
         setMessageMode(undefined)
@@ -78,7 +77,7 @@ export default function AddProduct(slugs: {}) {
             sx={{ width: 150 }}
             size="small"
             >
-            { Object.entries(slugs).map((option) => (
+            { Object.entries(slugs).map((option, i) => (
                 <MenuItem key={option[0]} value={option[0]}>{option[1]}</MenuItem>
             )) }
             </TextField>

@@ -10,11 +10,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-let slugs: {} | undefined = []
-
 const fetchSlugData = async() =>{
     const resSlug = await getCategorySlug()
-    slugs = resSlug
     return resSlug
 }
 
@@ -28,9 +25,11 @@ export function ProductTable() {
     const [targetId, setTargetId] = useState(-1)
     const [targetName, setTargetName] = useState("")
     const [rows, setRows] = useState([])
+    const [slugs, setSlugs] = useState({})
 
     React.useEffect(() => {
-        slugs = fetchSlugData()
+        fetchSlugData().then((e) => setSlugs(e))
+
         fetchProductsData()
         .then((e: any) => {
             Object.values(e).map((el, i) => {

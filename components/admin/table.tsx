@@ -28,17 +28,24 @@ export function ProductTable() {
     const [slugs, setSlugs] = useState({})
 
     React.useEffect(() => {
-        fetchSlugData().then((e) => setSlugs(e))
-
-        fetchProductsData()
-        .then((e: any) => {
-            Object.values(e).map((el, i) => {
-                e[i].category = slugs[el.category]
-            })
+        fetchSlugData()
+        .then((e) => {
+            setSlugs(e)
             return e
-        }).then((e) => {
-            setRows(e)
         })
+        .then((slugs) => {
+            fetchProductsData()
+            .then((e: any) => {
+                Object.values(e).map((el, i) => {
+                    e[i].category = slugs[el.category]
+                })
+                return e
+            }).then((e) => {
+                setRows(e)
+            })
+        })
+
+        
     }, [])
     
 

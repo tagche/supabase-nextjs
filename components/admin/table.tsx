@@ -31,7 +31,15 @@ export function ProductTable() {
 
     React.useEffect(() => {
         slugs = fetchSlugData()
-        fetchProductsData().then((e: any) => { setRows(e) })
+        fetchProductsData()
+        .then((e: any) => {
+            Object.values(e).map((el, i) => {
+                if(slugs[el.category]) e[i].category = slugs[el.category]
+            })
+            return e
+        }).then((e) => {
+            setRows(e)
+        })
     }, [])
     
 

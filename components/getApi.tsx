@@ -4,10 +4,10 @@ import { Database } from '../utils/database.types'
 import { rejects } from 'assert'
 
 export type Categories = Database['public']['Tables']['categories']['Row'] | null
-export type Products = Database['public']['Tables']['products']['Row'] | null
+export type Products = Database['public']['Tables']['products']['Row']
 export type Category_parent = Database['public']['Tables']['category_parent']['Row'] | null
 
-export async function deleteProductApi(id){
+export async function deleteProductApi(id: number){
     try {
         let { data, error } = await supabase
             .from('products')
@@ -22,7 +22,7 @@ export async function deleteProductApi(id){
     }
 }
 
-export async function addProductApi(setData){
+export async function addProductApi(setData: Products){
     try {
         let { data, error } = await supabase
             .from('products')
@@ -31,8 +31,8 @@ export async function addProductApi(setData){
         if (error) return error.message
         return false
 
-    } catch (error) {
-        return error.message
+    } catch (error: unknown) {
+        return error
     }
 }
 
@@ -42,7 +42,7 @@ export async function getAdminControlPanel(){
             .from('products')
             .select('*')
 
-        if (error && status !== 406) {
+        if (error) {
             throw error
         }
         return data
@@ -64,7 +64,7 @@ export async function getCategorySlug(){
         .from('categories')
         .select('slug, ja')
 
-        if (error && status !== 406) {
+        if (error) {
             throw error
         }
 
@@ -112,7 +112,7 @@ export async function getCategories(route?: string){
                 .select('slug, ja, products (*)')
                 .eq(target, slug)
         
-                if (error && status !== 406) {
+                if (error) {
                     throw error
                 }
 

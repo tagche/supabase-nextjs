@@ -9,54 +9,37 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
-let rows: ProductsTypes[] = []
-let slugs: slugsType[] = []
+let slugs: {} | undefined = []
 
-const fetchSlugData = new Promise((resolve, reject) => {
-    const resSlug = getCategorySlug()
-    resolve(resSlug)
-}).catch(error => console.error(error.message))
+const fetchSlugData = async() =>{
+    const resSlug = await getCategorySlug()
+    slugs = resSlug
+    return resSlug
+}
 
-const fetchProductsData = new Promise((resolve, reject) => {
-    const resProducts = getAdminControlPanel()
-    resolve(resProducts)
-}).catch(error => console.error(error.message))
+const fetchProductsData = async() =>{
+    const resProducts = await getAdminControlPanel()
+    return resProducts
+}
 
-fetchSlugData
-    .then((slug: any) => {
-        slugs = slug
-        
-        //テーブル一覧用データ
-        //categoryがslugで返ってくるので、日本語に変換して格納
-        fetchProductsData.then((prds) => {
-            if(!prds || prds == 0) return false
-            Object.values(prds).map((e, i) => {
-                const str = slugs[e.category]
-                rows.push({
-                    category: str,
-                    id: e.id,
-                    ja: e.ja,
-                    description: e.description,
-                    price: e.price,
-                    updated_at: e.updated_at
-                })
-            })
-        })
-    }
-)
-
-export default function DataTable() {
+export function ProductTable() {
     const [isOpen, setOpenDialog] = useState(false)
     const [targetId, setTargetId] = useState(-1)
     const [targetName, setTargetName] = useState("")
+    const [rows, setRows] = useState([])
+
+    React.useEffect(() => {
+        slugs = fetchSlugData()
+        fetchProductsData().then((e: any) => { setRows(e) })
+    }, [])
+    
 
     const handleClose = () => {
         setOpenDialog(false)
     }
 
-    const handleDelete = ((e) => {
+    const handleDelete = ((e: any) => {
         const parent = e.target.closest('[data-id]')
         const id = parent.getAttribute('data-id')
         const name = parent.querySelector('[data-field=ja]').children[0].getAttribute('title')
@@ -65,6 +48,7 @@ export default function DataTable() {
         setTargetName(name)
         setOpenDialog(true)
     })
+
     const doDelete = (() => {
         setOpenDialog(false)
         const resultDelete = deleteProductApi(targetId)
@@ -72,7 +56,6 @@ export default function DataTable() {
             if(!e) alert("削除しました。")
             window.location.reload()
         })
-
     })
     
     const columns: GridColDef[] = [
@@ -111,8 +94,8 @@ export default function DataTable() {
         <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
+            //pageSize={5}
+            //rowsPerPageOptions={[5]}
             checkboxSelection={false}
         />
         </div>
@@ -120,5 +103,8 @@ export default function DataTable() {
         <br />
         <AddProduct {...slugs} />
         </>
-    );
+    )
+
 }
+
+export default ProductTable

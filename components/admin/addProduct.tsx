@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send'
 import { ChangeEvent, FormEvent, useState } from "react"
 
 
-export default function AddProduct(slugs: []) {
+export default function AddProduct(slugs: {}) {
 
     
     const [ selectCategory, setSelectCategory ] = useState("")

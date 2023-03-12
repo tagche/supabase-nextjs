@@ -37,7 +37,7 @@ export interface Database {
       }
       products: {
         Row: {
-          category: string | null
+          category: string
           id: string
           ja: string
           slug?: string
@@ -46,7 +46,7 @@ export interface Database {
           updated_at?: string | null
         }
         Insert: {
-          category?: string | null
+          category?: string
           id?: string
           ja: string
           slug?: string
@@ -55,7 +55,7 @@ export interface Database {
           updated_at?: string | null
         }
         Update: {
-          category?: string | null
+          category?: string
           id?: string
           ja: string
           slug?: string

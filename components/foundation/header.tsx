@@ -19,8 +19,8 @@ export default function Header(){
             <div>
             <Link href="/products/">
                 <>
-                    <Typography variant="h4" component="h1">OrderSystem Portfolio with Supabase</Typography>
-                    <Typography>Next.js / React / TypeScript / Supabase / docker - Leo.T</Typography>
+                    <Typography variant="h4" component="h1">OrderSystem with Supabase</Typography>
+                    <Typography>Next.js / React / TypeScript / Supabase / docker - Portforio - Leo.T</Typography>
                 </>
             </Link>
             </div>

@@ -218,3 +218,40 @@ div[direction=vertical].c-jTXIoq-jjTuOt-gap-small{
 .container{
   text-align: center;
 }
+
+.info{
+  margin: auto;
+  max-width: 500px;
+
+  &-board{
+    margin: 50px 2em 50px 0;
+    background: #fff;
+    p{
+      line-height: 1.8;
+    }
+    &__intro{
+      margin: 1em 0;
+    }
+  }
+
+  &-function,
+  &-skillset,
+  &-github{
+    margin-top: 2em;
+
+    ul{
+      padding-left: 2em;
+      li{
+        list-style-type: disc;
+      }
+    }
+    
+  }
+
+  .btn-container{
+    display: flex;
+    justify-content: space-around;
+    max-width: 80%;
+    margin: auto;
+  }
+}

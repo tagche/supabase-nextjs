@@ -226,12 +226,12 @@ div[direction=vertical].c-jTXIoq-jjTuOt-gap-small{
   &-board{
     margin: 50px 2em 50px 0 !important;
     background: #fff !important;
-    padding-right: 2em;
+    padding-right: 2em !important;
     p{
       line-height: 1.8;
     }
     &__intro{
-      margin: 1em 0;
+      margin: 1em 0 !important;
     }
   }
 

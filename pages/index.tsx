@@ -9,8 +9,8 @@ const Home = () => {
   <AlertTitle variant='subtitle1'>About this Page</AlertTitle>
   <Typography variant='body2' className='info-board__intro'>このページは<strong>React / TypeScript / Next.js</strong> で構築したWeb
   アプリの試作ページです。</Typography>
-  <Typography variant='body2'>開発現場で採用頻度の高い技術を盛り込むことに重点を置いています。<br />
-  そのため、SPAの取り入れやDB連携スキルを表現するために Supabase（BaaS）を採用し、API連携や非同期処理などを意識したページを作成しました。</Typography>
+  <Typography variant='body2'>開発現場で採用頻度の高い技術を盛り込むことに重点を置いて作りました。<br />
+  そのため、SPAの取り入れやDB連携スキルを表現するために Supabase（BaaS）を採用し、API連携や非同期処理などを意識した作りとなっています。</Typography>
   <Typography variant='caption'>※アニメーション（GSAP）やWebGL、PHP、WordPress、HTML/CSSなどのスキルは別途職務経歴書をご覧ください。</Typography>
 
 <div className="info-function">

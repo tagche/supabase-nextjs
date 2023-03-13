@@ -34,12 +34,12 @@ const Home = () => {
   </ul>
   <div className="info-github">
   <Typography variant='body2'>GitHub</Typography>
-  <p><a href="https://github.com/tagche/supabase-nextjs" target="_blank">https://github.com/tagche/supabase-nextjs</a></p>
+  <p><Link href="https://github.com/tagche/supabase-nextjs" rel="noreferrer" target="_blank">https://github.com/tagche/supabase-nextjs</Link></p>
   </div>
   </div>
   </Alert>
   <div className="btn-container">
-    <Link href="products/"><Button variant='contained'>商品ページを見る</Button></Link><br />
+    <Link href="products/"><Button variant='contained'>商品ページを見る</Button></Link>
     <Link href="admin/"><Button variant='contained'>商品管理画面を見る</Button></Link>
   </div>
     </div>

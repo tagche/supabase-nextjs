@@ -18,7 +18,11 @@ const Admin = () => {
       <Header />
       <main className={styles.adminMain}>
       {!session ? (
+        <>
+        <div className='login'>
         <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} theme="dark" />
+        </div>
+        </>
       ) : (
         <ProductsTable />
       )}

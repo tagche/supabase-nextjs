@@ -48,8 +48,6 @@ export default function Account({ session }: { session: Session }) {
       setLoading(false)
     }
   }
-
-  const [showPassword, setShowPassword] = useState(false)
   
   return (
     <div className="form-widget loginBlock">
